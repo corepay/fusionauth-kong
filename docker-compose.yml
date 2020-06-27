@@ -28,7 +28,7 @@ services:
     volumes:
       - dbserver_data:/var/lib/postgresql/data
 
- secrets:
-    postgres_password:
-      file: ./POSTGRES_PASSWORD
-      
+secrets:
+  postgres_password:
+    file: ./POSTGRES_PASSWORD
+    
