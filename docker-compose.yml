@@ -109,39 +109,39 @@ services:
     volumes:
       - dbserver_data:/var/lib/postgresql/data
 
-  #######################################
-  # Konga database prepare
-  #######################################
-  konga-prepare:
-    image: pantsel/konga:next
-    command: "-c prepare -a postgres -u postgresql://sa@db_server:5432/konga_db"
-    networks:
-      - kong-net
-    restart: on-failure
-    links:
-      - db_server
-    depends_on:
-      - db_server
+  # #######################################
+  # # Konga database prepare
+  # #######################################
+  # konga-prepare:
+  #   image: pantsel/konga:next
+  #   command: "-c prepare -a postgres -u postgresql://sa@db_server:5432/konga_db"
+  #   networks:
+  #     - kong-net
+  #   restart: on-failure
+  #   links:
+  #     - db_server
+  #   depends_on:
+  #     - db_server
 
-  #######################################
-  # Konga: Kong GUI
-  #######################################
-  konga:
-    image: pantsel/konga:next
-    restart: always
-    networks:
-        - kong-net
-    environment:
-      DB_ADAPTER: postgres
-      DB_HOST: db_server
-      DB_USER: sa
-      TOKEN_SECRET: km1GUr4RkcQD7DewhJPNXrCuZwcKmqjb
-      DB_DATABASE: konga_db
-      NODE_ENV: production
-    depends_on:
-      - db_server
-    ports:
-      - "1337:1337"
+  # #######################################
+  # # Konga: Kong GUI
+  # #######################################
+  # konga:
+  #   image: pantsel/konga:next
+  #   restart: always
+  #   networks:
+  #       - kong-net
+  #   environment:
+  #     DB_ADAPTER: postgres
+  #     DB_HOST: db_server
+  #     DB_USER: sa
+  #     TOKEN_SECRET: km1GUr4RkcQD7DewhJPNXrCuZwcKmqjb
+  #     DB_DATABASE: konga_db
+  #     NODE_ENV: production
+  #   depends_on:
+  #     - db_server
+  #   ports:
+  #     - "1337:1337"
 
 secrets:
   postgres_password:
