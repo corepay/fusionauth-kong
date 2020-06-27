@@ -34,8 +34,7 @@ services:
     image: kong
     container_name: kong-migration
     depends_on:
-      db_server:
-        condition: service_healthy
+      - db_server
     environment:
       - KONG_DATABASE=kong
       - KONG_PG_HOST=db_server
