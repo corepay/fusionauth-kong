@@ -30,16 +30,18 @@ services:
     # volumes:
     #   - dbserver_data:/var/lib/postgresql/data
 
-kong-migration:
-  image: kong
-  container_name: kong-migration
-  depends_on:
-    db_server:
-      condition: service_healthy
-  environment:
-    - KONG_DATABASE=kong
-    - KONG_PG_HOST=db_server
-  command: kong migrations bootstrap
+  kong-migration:
+    image: kong
+    container_name: kong-migration
+    depends_on:
+      db_server:
+        condition: service_healthy
+    environment:
+      - KONG_DATABASE=kong
+      - KONG_PG_HOST=db_server
+    networks:
+      - kong-net
+    command: kong migrations bootstrap
 
 secrets:
   postgres_password:
