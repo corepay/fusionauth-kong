@@ -43,6 +43,7 @@ services:
       - KONG_PG_PORT=5432
     networks:
       - kong-net
+    restart: on-failure
     command: kong migrations bootstrap
 
 secrets:
