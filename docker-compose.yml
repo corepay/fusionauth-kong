@@ -87,28 +87,19 @@ services:
   db_server:
     image: postgres:9.6
     restart: always
-    environment:
-      POSTGRES_DB: ${KONG_PG_DATABASE:-kong}
-      POSTGRES_USER: ${KONG_PG_USER:-kong}
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-    secrets:
-      - postgres_password
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${KONG_PG_USER:-kong}"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    restart: on-failure
-    deploy:
-      restart_policy:
-        condition: on-failure
-    stdin_open: true
-    tty: true
     networks:
       - kong-net
-    volumes:
-      - dbserver_data:/var/lib/postgresql/data
-
+    environment:
+      POSTGRES_USER: kong
+      POSTGRES_DB: kong
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kong"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      
   # #######################################
   # # Konga database prepare
   # #######################################
