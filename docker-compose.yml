@@ -14,7 +14,7 @@ services:
     restart: always
     environment:
       POSTGRES_DB: kong
-      POSTGRES_USER: sa
+      POSTGRES_USER: kong
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     ports:
       - "5432:5432"
