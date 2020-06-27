@@ -38,6 +38,9 @@ services:
     environment:
       - KONG_DATABASE=postgres
       - KONG_PG_HOST=db_server
+      - KONG_PG_PASSWORD=sa123*
+      - KONG_PG_DATABASE=kong
+      - KONG_PG_PORT=5432
     networks:
       - kong-net
     command: kong migrations bootstrap
