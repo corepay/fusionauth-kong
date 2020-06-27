@@ -1,3 +1,7 @@
+# Ejemplo docker-compose postgres - kong
+https://github.com/peter-evans/docker-compose-healthcheck
+https://github.com/peter-evans/docker-compose-healthcheck/blob/master/
+
 # Kong in Docker Compose
 
 This is the official Docker Compose template for [Kong][kong-site-url].
@@ -39,3 +43,4 @@ Before you start to code, we recommend discussing your plans through a [GitHub i
 [kong-site-url]: https://konghq.com/
 [kong-docs-url]: https://docs.konghq.com/
 [github-new-issue]: https://github.com/Kong/docker-kong/issues/new
+

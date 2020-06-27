@@ -21,7 +21,7 @@ services:
     secrets:
       - postgres_password
     healthcheck:
-      test: ["CMD", "pg_isready -h localhost -d kong -U kong -p 5432"]
+      test: ["CMD", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
