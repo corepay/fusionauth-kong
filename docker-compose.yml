@@ -1,35 +1,47 @@
-version: '3.7'
+version: '2.1'
 
-volumes:
-  dbserver_data: {}
-
-networks:
-  kong-net:
-    external: false
-  
 services:
-
-  db_server:
-    image: postgres:9.6
-    restart: always
+  kong-database:
+    image: postgres:9.5
+    container_name: kong-postgres
     environment:
-      POSTGRES_DB: kong
-      POSTGRES_USER: kong
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-    ports:
-      - "5432:5432"
-    secrets:
-      - postgres_password
+      - POSTGRES_USER=kong
+      - POSTGRES_DB=kong
     healthcheck:
-      test: ["CMD", "pg_isready -U postgres"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - kong-net
-    volumes:
-      - dbserver_data:/var/lib/postgresql/data
 
-secrets:
-  postgres_password:
-    file: ./POSTGRES_PASSWORD
+  kong-migration:
+    image: kong
+    container_name: kong-migration
+    depends_on:
+      kong-database:
+        condition: service_healthy
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=kong-database
+    command: kong migrations bootstrap
+
+  kong:
+    image: kong
+    container_name: kong
+    restart: always
+    depends_on:
+      kong-database:
+        condition: service_healthy
+      kong-migration:
+        condition: service_started
+    links:
+      - kong-database:kong-database
+    ports:
+      - 8000:8000
+      - 8443:8443
+      - 8001:8001
+      - 8444:8444
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=kong-database
+      - KONG_PG_DATABASE=kong
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
