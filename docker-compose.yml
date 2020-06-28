@@ -60,6 +60,7 @@ services:
     container_name: kong-migration-up
     depends_on:
       - db_server
+      - kong-migration
     environment:
       KONG_DATABASE: postgres
       KONG_PG_HOST: db_server
