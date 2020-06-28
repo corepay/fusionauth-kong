@@ -137,7 +137,7 @@ services:
       DB_PORT: 5432
       DB_DATABASE: konga_db
       DB_USER: kong
-      DB_PASSWORD: /run/secrets/postgres_password
+      DB_PASSWORD: sa123*
       NODE_ENV: development
       KONGA_HOOK_TIMEOUT: 10000
     secrets:
