@@ -4,7 +4,7 @@ https://github.com/peter-evans/docker-compose-healthcheck/blob/master/
 
 #Kong - Konga
 https://dev.to/vousmeevoyez/setup-kong-konga-part-2-dan
-
+https://medium.com/@tselentispanagis/managing-microservices-and-apis-with-kong-and-konga-7d14568bb59d
 # Kong in Docker Compose
 
 This is the official Docker Compose template for [Kong][kong-site-url].
