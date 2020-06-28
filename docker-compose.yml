@@ -130,11 +130,11 @@ services:
       - postgres_password
     restart: on-failure
     ports:
-    - 1337:1337
+      - 1337:1337
     depends_on:
       - db_server
     networks:
-    - kong-net
+      - kong-net
 
 secrets:
   postgres_password:
