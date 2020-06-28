@@ -35,16 +35,44 @@ services:
     container_name: kong-migration
     depends_on:
       - db_server
-    environment:
-      - KONG_DATABASE=postgres
-      - KONG_PG_HOST=db_server
-      - KONG_PG_PASSWORD=sa123*
-      - KONG_PG_DATABASE=kong
-      - KONG_PG_PORT=5432
+      environment:
+        KONG_DATABASE: postgres
+        KONG_PG_HOST: db_server
+        KONG_PG_PORT: 5432      
+        KONG_PG_DATABASE: kong
+        KONG_PG_USER: kong
+        KONG_PG_PASSWORD_FILE: /run/secrets/postgres_password
+      secrets:
+        - postgres_password
+    # environment:
+    #   - KONG_DATABASE=postgres
+    #   - KONG_PG_HOST=db_server
+    #   - KONG_PG_PASSWORD=sa123*
+    #   - KONG_PG_DATABASE=kong
+    #   - KONG_PG_PORT=5432
     networks:
       - kong-net
     restart: on-failure
     command: kong migrations bootstrap
+
+  kong-migrations-up:
+    image: "kong:latest"
+    container_name: kong-migration-up
+    depends_on:
+      - db_server
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: db_server
+      KONG_PG_PORT: 5432      
+      KONG_PG_DATABASE: kong
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    networks:
+      - kong-net
+    restart: on-failure
+    command: kong migrations up && kong migrations finish
 
 secrets:
   postgres_password:
