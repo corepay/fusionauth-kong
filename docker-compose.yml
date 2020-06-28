@@ -116,7 +116,7 @@ services:
   #######################################
   konga-prepare:
     image: pantsel/konga:next
-    command: "-c prepare -a postgres -u postgresql://kong:sa123*g@db_server:5432/konga_db"
+    command: "-c prepare -a postgres -u postgresql://kong:sa123*@db_server:5432/konga_db"
     networks:
       - kong-net
     restart: on-failure
