@@ -2,6 +2,9 @@
 https://github.com/peter-evans/docker-compose-healthcheck
 https://github.com/peter-evans/docker-compose-healthcheck/blob/master/
 
+#Kong - Konga
+https://dev.to/vousmeevoyez/setup-kong-konga-part-2-dan
+
 # Kong in Docker Compose
 
 This is the official Docker Compose template for [Kong][kong-site-url].

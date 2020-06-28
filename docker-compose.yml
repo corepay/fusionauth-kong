@@ -111,6 +111,31 @@ services:
       retries: 10
     restart: on-failure
 
+  #######################################
+  # Konga
+  #######################################
+  konga:
+    image: pantsel/konga
+    environment:
+      TOKEN_SECRET: km1GUr4RkcQD7DewhJPNXrCuZwcKmqjb
+      DB_ADAPTER: postgres
+      DB_HOST: db_server
+      DB_PORT: 5432
+      DB_DATABASE: konga_db
+      DB_USER: kong
+      DB_PASSWORD: /run/secrets/postgres_password
+      NODE_ENV: development
+      KONGA_HOOK_TIMEOUT: 10000
+    secrets:
+      - postgres_password
+    restart: on-failure
+    ports:
+    - 1337:1337
+    depends_on:
+    - db
+    networks:
+    - kong-net
+
 secrets:
   postgres_password:
     file: ./POSTGRES_PASSWORD
